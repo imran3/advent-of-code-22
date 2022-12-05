@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 
-const maxCalories = () => {
+const groupCaloriesPerElf = (): Array<number> => {
     const input : Array<string> = readFileSync('./input.txt', 'utf-8').split("\n\n");
 
     let inputGroups : Array<string[]> = []
@@ -18,12 +18,14 @@ const maxCalories = () => {
         caloriesPerElf.push(sum)
     })
 
-    const maxCaloriesInGroup = Math.max(...caloriesPerElf)
-
-    return {caloriesPerElf, maxCaloriesInGroup};
+    return caloriesPerElf
 }
 
-const topThreeSum = (caloriesPerElf: number[]) => {
+const maxCalories = (caloriesPerElf: Array<number>) : number => {
+    return  Math.max(...caloriesPerElf)
+}
+
+const topThreeSum = (caloriesPerElf: number[]) : number => {
     let topThree = caloriesPerElf.sort((a, b) => b - a ).splice(0, 3)
     let sumTopThree = topThree.reduce((a, b) => a + b, 0)
     
@@ -31,8 +33,8 @@ const topThreeSum = (caloriesPerElf: number[]) => {
 }
 
 
-
-const {caloriesPerElf, maxCaloriesInGroup} = maxCalories()
+const caloriesPerElf = groupCaloriesPerElf()
+const maxCaloriesInGroup = maxCalories(caloriesPerElf)
 const topThreeCaloriesSum = topThreeSum(caloriesPerElf)
 
 console.log("First puzzle's answer: ", maxCaloriesInGroup)
